@@ -35,7 +35,7 @@ class MovieBox extends Component {
   };
 
   handleAdd(event) {
-    const id = event.target.id;
+    var id = this.props.movie.id;
     this.addToWatchList(id);
   }
   // add the movie to watchlist
@@ -46,10 +46,11 @@ class MovieBox extends Component {
       title: this.props.movie.title,
       release_date: this.props.movie.release_date,
       poster: this.props.movie.poster,
-      vote_average: this.props.movie.vote_average
+      vote_average: this.props.movie.vote_average,
+      overview: this.props.movie.overview
     };
     var savedWatchlist = [];
-    savedWatchlist = JSON.parse(localStorage.getItem("watchlist"));
+    savedWatchlist = Array.from(JSON.parse(localStorage.getItem("watchlist")));
     if (savedWatchlist) {
       savedWatchlist.push(watchMovies);
       savedWatchlist = this.getUnique(savedWatchlist, "id");
@@ -109,8 +110,13 @@ class MovieBox extends Component {
           crew = crew.slice(0, 5);
         }
         cast.forEach(cast => {
-          cast.profile_path =
-            "https://image.tmdb.org/t/p/w185" + cast.profile_path;
+          if (cast.profile_path !== null) {
+            cast.profile_path =
+              "https://image.tmdb.org/t/p/w185" + cast.profile_path;
+          } else {
+            cast.profile_path =
+              "https://www.underconsideration.com/brandnew/archives/google_broken_image_00_b_logo_detail.gif";
+          }
         });
         this.setState({ detail: details });
         this.setState({ crew: crew });
@@ -139,8 +145,13 @@ class MovieBox extends Component {
           this.setState({ relatedMovieTitle: "Related Movies" });
         }
         relatedMovies.forEach(relatedMovie => {
-          relatedMovie.poster_path =
-            "https://image.tmdb.org/t/p/w185" + relatedMovie.poster_path;
+          if (relatedMovie.poster_path !== null) {
+            relatedMovie.poster_path =
+              "https://image.tmdb.org/t/p/w185" + relatedMovie.poster_path;
+          } else {
+            relatedMovie.poster_path =
+              "https://www.underconsideration.com/brandnew/archives/google_broken_image_00_b_logo_detail.gif";
+          }
         });
         this.setState({ relatedMovies: relatedMovies });
       },
@@ -166,8 +177,13 @@ class MovieBox extends Component {
           this.setState({ backgroundsTitle: "Backgrounds" });
         }
         backdrops.forEach(backdrop => {
-          backdrop.file_path =
-            "https://image.tmdb.org/t/p/w185" + backdrop.file_path;
+          if (backdrop.file_path !== null) {
+            backdrop.file_path =
+              "https://image.tmdb.org/t/p/w185" + backdrop.file_path;
+          } else {
+            backdrop.file_path =
+              "https://www.underconsideration.com/brandnew/archives/google_broken_image_00_b_logo_detail.gif";
+          }
         });
         this.setState({ backdrops: backdrops });
       },
@@ -222,8 +238,8 @@ class MovieBox extends Component {
       <div
         key={this.props.movie.id}
         style={{
-          width: 230,
-          height: 420,
+          width: "230px",
+          height: "420px",
           paddingTop: 25,
           color: "#00cca3",
           float: "left"
@@ -232,11 +248,13 @@ class MovieBox extends Component {
         <main>
           <Modal show={this.state.show} handleClose={this.hideModal}>
             <div className="modal-div1">
-              <img
-                style={{ position: "relative" }}
-                alt="poster"
-                src={this.props.movie.poster}
-              />
+              <div className="modal-img">
+                <img
+                  style={{ position: "relative" }}
+                  alt="poster"
+                  src={this.props.movie.poster}
+                />
+              </div>
               <div className="bookmark-div">
                 <button className="icon-btn">
                   <FaBookmark />
@@ -260,7 +278,9 @@ class MovieBox extends Component {
                 {this.state.relatedMovies.map(function(movie, index) {
                   return (
                     <div className="related-movie" key={index}>
-                      <img alt="poster" src={movie.poster_path} />
+                      <div className="related-img">
+                        <img alt="poster" src={movie.poster_path} />
+                      </div>
                       <br />
                       {movie.title}
                     </div>
@@ -269,11 +289,12 @@ class MovieBox extends Component {
               </div>
             </div>
             <div className="modal-div2">
-              <h2>
-                <strong>
-                  <span className="green-text">{this.props.movie.title}</span>
-                </strong>
-              </h2>
+              <div className="modal-title">
+                <h2>
+                  <strong>{this.props.movie.title}</strong>
+                </h2>
+              </div>
+
               <div>
                 <div className="detail-top">
                   <div className={this.state.detail[0].percent_class}>
@@ -350,7 +371,9 @@ class MovieBox extends Component {
                 {this.state.cast.map(function(cast, index) {
                   return (
                     <div className="cast" key={index}>
-                      <img alt="profile" src={cast.profile_path} />
+                      <div className="cast-profile">
+                        <img alt="profile" src={cast.profile_path} />
+                      </div>
                       <br />
                       {cast.name}
                       <br />
@@ -388,20 +411,20 @@ class MovieBox extends Component {
               />
             </TrailerModal>
           </Modal>
+          <div className="poster-container" id={this.props.movie.id}>
+            <div
+              className="poster"
+              id={this.props.movie.id}
+              onClick={this.showModal}
+            >
+              <div className="movie-poster">
+                <img alt="poster" src={this.props.movie.poster} />
+              </div>
 
-          <div className="poster">
-            <div className="movie-poster">
-              <img
-                id={this.props.movie.id}
-                onClick={this.showModal}
-                alt="poster"
-                src={this.props.movie.poster}
-              />
-            </div>
-
-            <div className="hoverText">
-              <strong>{this.props.movie.title}</strong>
-              <p>{this.props.movie.overview}</p>
+              <div className="hoverText">
+                <strong>{this.props.movie.title}</strong>
+                <p>{this.props.movie.overview}</p>
+              </div>
             </div>
           </div>
 
@@ -446,7 +469,7 @@ const Modal = ({ handleClose, show, children }) => {
       <div className="modal-main">
         <button className="back-btn" onClick={handleClose}>
           <FaChevronCircleLeft />
-          Back to all movie
+          Back to all movies
         </button>
         {children}
       </div>

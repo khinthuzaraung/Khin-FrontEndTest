@@ -15,16 +15,14 @@ class WatchList extends Component {
   }
   //display the movies that are in watchlist
   displayWatchlist() {
-    console.log("in display watchlist");
     var movieBoxes = [];
     var watchlist = [];
     var savedWatchlist = [];
     savedWatchlist = JSON.parse(localStorage.getItem("watchlist"));
     if (savedWatchlist) {
       watchlist = savedWatchlist;
-      console.log("saved watchlist: " + savedWatchlist);
     }
-    watchlist.forEach(movie => {
+    Array.prototype.forEach.call(watchlist, movie => {
       const movieBox = (
         <WatchMovie
           displayWatchlist={this.displayWatchlist}
@@ -45,11 +43,16 @@ class WatchList extends Component {
     $.ajax({
       url: urlString,
       success: searchResults => {
-        console.log("fetch data success");
         const results = searchResults.results;
         var movieBoxes = [];
         results.forEach(movie => {
-          movie.poster = "https://image.tmdb.org/t/p/w185" + movie.poster_path;
+          if (movie.poster_path !== null) {
+            movie.poster =
+              "https://image.tmdb.org/t/p/w185" + movie.poster_path;
+          } else {
+            movie.poster =
+              "https://www.underconsideration.com/brandnew/archives/google_broken_image_00_b_logo_detail.gif";
+          }
           const movieBox = <MovieBox key={movie.id} movie={movie} />;
           movieBoxes.push(movieBox);
         });
