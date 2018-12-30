@@ -50,7 +50,7 @@ class MovieBox extends Component {
       overview: this.props.movie.overview
     };
     var savedWatchlist = [];
-    if (localStorage.getItem("watchlistWpk") !== null) {
+    if (localStorage.getItem("list") !== null) {
       savedWatchlist = Array.from(
         JSON.parse(localStorage.getItem("list"))
       );
@@ -89,7 +89,7 @@ class MovieBox extends Component {
     const urlString =
       "https://api.themoviedb.org/3/movie/" +
       this.props.movie.id +
-      "?api_key=4ccda7a34189fcea2fc752a6ee339500&append_to_response=credits";
+      "?api_key=7ca0ba8d755b746db8c0083a2ba1ef16&append_to_response=credits";
 
     $.ajax({
       url: urlString,
@@ -136,7 +136,7 @@ class MovieBox extends Component {
     const urlString =
       "https://api.themoviedb.org/3/movie/" +
       this.props.movie.id +
-      "/similar?api_key=4ccda7a34189fcea2fc752a6ee339500&language=en-US";
+      "/similar?api_key=7ca0ba8d755b746db8c0083a2ba1ef16&language=en-US";
 
     $.ajax({
       url: urlString,
@@ -169,7 +169,7 @@ class MovieBox extends Component {
     const urlString =
       "https://api.themoviedb.org/3/movie/" +
       this.props.movie.id +
-      "/images?api_key=4ccda7a34189fcea2fc752a6ee339500&language=ru-RU&include_image_language=ru,null";
+      "/images?api_key=7ca0ba8d755b746db8c0083a2ba1ef16&language=ru-RU&include_image_language=ru,null";
 
     $.ajax({
       url: urlString,
@@ -201,7 +201,7 @@ class MovieBox extends Component {
     const urlString =
       "https://api.themoviedb.org/3/movie/" +
       this.props.movie.id +
-      "/videos?api_key=4ccda7a34189fcea2fc752a6ee339500&language=en-US";
+      "/videos?api_key=7ca0ba8d755b746db8c0083a2ba1ef16&language=en-US";
 
     $.ajax({
       url: urlString,
