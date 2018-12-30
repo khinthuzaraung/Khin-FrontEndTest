@@ -40,11 +40,11 @@ class WatchMovie extends Component {
   }
   // remove the movie from watchlist
   removeMovie(id) {
-    var savedWatchlist = JSON.parse(localStorage.getItem("watchlist"));
+    var savedWatchlist = JSON.parse(localStorage.getItem("list"));
     savedWatchlist = savedWatchlist.filter(function(e) {
       return e.id !== id;
     });
-    localStorage.setItem("watchlist", JSON.stringify(savedWatchlist));
+    localStorage.setItem("list", JSON.stringify(savedWatchlist));
 
     this.props.displayWatchlist();
   }
@@ -53,7 +53,7 @@ class WatchMovie extends Component {
     const urlString =
       "https://api.themoviedb.org/3/movie/" +
       this.props.movie.id +
-      "?api_key=4ccda7a34189fcea2fc752a6ee339500&append_to_response=credits";
+      "?api_key=7ca0ba8d755b746db8c0083a2ba1ef16&append_to_response=credits";
 
     $.ajax({
       url: urlString,
@@ -100,7 +100,7 @@ class WatchMovie extends Component {
     const urlString =
       "https://api.themoviedb.org/3/movie/" +
       this.props.movie.id +
-      "/similar?api_key=4ccda7a34189fcea2fc752a6ee339500&language=en-US";
+      "/similar?api_key=7ca0ba8d755b746db8c0083a2ba1ef16&language=en-US";
 
     $.ajax({
       url: urlString,
@@ -133,7 +133,7 @@ class WatchMovie extends Component {
     const urlString =
       "https://api.themoviedb.org/3/movie/" +
       this.props.movie.id +
-      "/images?api_key=4ccda7a34189fcea2fc752a6ee339500&language=ru-RU&include_image_language=ru,null";
+      "/images?api_key=7ca0ba8d755b746db8c0083a2ba1ef16&language=ru-RU&include_image_language=ru,null";
 
     $.ajax({
       url: urlString,
@@ -165,7 +165,7 @@ class WatchMovie extends Component {
     const urlString =
       "https://api.themoviedb.org/3/movie/" +
       this.props.movie.id +
-      "/videos?api_key=4ccda7a34189fcea2fc752a6ee339500&language=en-US";
+      "/videos?api_key=7ca0ba8d755b746db8c0083a2ba1ef16&language=en-US";
 
     $.ajax({
       url: urlString,

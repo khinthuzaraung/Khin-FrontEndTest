@@ -18,7 +18,7 @@ class WatchList extends Component {
     var movieBoxes = [];
     var watchlist = [];
     var savedWatchlist = [];
-    savedWatchlist = JSON.parse(localStorage.getItem("watchlist"));
+    savedWatchlist = JSON.parse(localStorage.getItem("list"));
     if (savedWatchlist) {
       watchlist = savedWatchlist;
     }
@@ -37,7 +37,7 @@ class WatchList extends Component {
   //search movies by input keyword
   performSearch(searchTerm) {
     const urlString =
-      "https://api.themoviedb.org/3/search/movie?api_key=4ccda7a34189fcea2fc752a6ee339500&query=" +
+      "https://api.themoviedb.org/3/search/movie?api_key=7ca0ba8d755b746db8c0083a2ba1ef16&query=" +
       searchTerm;
 
     $.ajax({
