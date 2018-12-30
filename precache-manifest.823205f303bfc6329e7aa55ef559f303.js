@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/Khin-FrontEndTest/static/js/runtime~main.2f58e1ae.js"
   },
   {
-    "revision": "bbf0ab7f4c81ceca40ac",
-    "url": "/Khin-FrontEndTest/static/js/main.bbf0ab7f.chunk.js"
+    "revision": "5fe5d989c73e981d779e",
+    "url": "/Khin-FrontEndTest/static/js/main.5fe5d989.chunk.js"
   },
   {
     "revision": "f4b9e161a2f711d998c3",
     "url": "/Khin-FrontEndTest/static/js/1.f4b9e161.chunk.js"
   },
   {
-    "revision": "bbf0ab7f4c81ceca40ac",
+    "revision": "5fe5d989c73e981d779e",
     "url": "/Khin-FrontEndTest/static/css/main.4b9a4367.chunk.css"
   },
   {
-    "revision": "710e9620d774425695620b5a9f2db560",
+    "revision": "55edc5e4e65299f92483dc3593bdb69f",
     "url": "/Khin-FrontEndTest/index.html"
   }
 ];
