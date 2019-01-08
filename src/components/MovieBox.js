@@ -31,8 +31,17 @@ class MovieBox extends Component {
         genres: [{ id: 18, name: "" }],
         percent_class: ""
       }
+    ],
+    genres: [
+      {
+        genres: [{ id: 18, name: "" }],
+        percent_class: ""
+      }
     ]
   };
+  componentDidMount() {
+    this.getGenres();
+  }
 
   handleAdd(event) {
     var id = this.props.movie.id;
@@ -84,6 +93,34 @@ class MovieBox extends Component {
 
     return unique;
   }
+
+   //get genres of movie
+  getGenres() {
+    const urlString =
+      "https://api.themoviedb.org/3/movie/" +
+      this.props.movie.id +
+      "?api_key=7ca0ba8d755b746db8c0083a2ba1ef16&append_to_response=credits";
+
+    $.ajax({
+      url: urlString,
+      success: searchResults => {
+        var detail = searchResults;
+        var genres = detail.genres;
+        if (genres.length > 2) {
+          genres = genres.slice(0, 2);
+          detail.genres = genres;
+        }
+        detail.percent_class = "";
+        var details = [];
+        details.push(detail);
+        this.setState({ genres: details });
+      },
+      error: (xhr, status, err) => {
+        console.error("Failed to fetch data");
+      }
+    });
+  }
+
   //get the detail info of the movie
   movieDetail() {
     const urlString =
@@ -244,8 +281,8 @@ class MovieBox extends Component {
         key={this.props.movie.id}
         style={{
           width: "230px",
-          height: "420px",
-          paddingTop: 25,
+          height: "395px",
+          paddingTop: 5,
           color: "#00cca3",
           float: "left"
         }}
@@ -395,8 +432,10 @@ class MovieBox extends Component {
               </div>
               {this.state.backdrops.map(function(backdrop, index) {
                 return (
+                <div className="backdrops-div" key={index}>
                   <div className="backdrops" key={index}>
                     <img alt="backgrounds" src={backdrop.file_path} />
+                  </div>
                   </div>
                 );
               })}
@@ -436,16 +475,19 @@ class MovieBox extends Component {
           <br />
           <center>
             <div className="title">
-              <strong> {this.props.movie.title}</strong>
+             {this.props.movie.title}
               <br />
-              <span
+               <span
                 style={{
                   color: "#fff",
-                  textAlign: "left",
-                  letterSpacing: "0.2mm"
+                  textAlign: "left"
                 }}
               >
-                Year :
+                Genres:
+                <span className="green-text">
+                  {this.state.genres[0].genres.map(g => g.name).join(", ")}
+                </span>{" "}
+                Year:
               </span>
               <span> {this.props.movie.release_date}</span>
             </div>
@@ -453,11 +495,7 @@ class MovieBox extends Component {
           <center>
             <div className="vote">
               <strong>{this.props.movie.vote_average}</strong>
-              <span className="icons">
-                <FaHeart />
-                <FaBookmark />
-                <FaStar />
-              </span>
+              
             </div>
           </center>
 
@@ -474,7 +512,7 @@ const Modal = ({ handleClose, show, children }) => {
       <div className="modal-main">
         <button className="back-btn" onClick={handleClose}>
           <FaChevronCircleLeft />
-          Back to all movies
+          Back to the list
         </button>
         {children}
       </div>
